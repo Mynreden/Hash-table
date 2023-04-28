@@ -146,4 +146,18 @@ public class MyHashTable<K, V> {
         result.append(']');
         return result.toString();
     }
+
+    public int[] sizeOfBuckets(){
+        int[] result = new int[this.M];
+        for (int i = 0; i < this.M; i ++){
+            int length = 0;
+            HashNode<K, V> pointer = this.chainArray[i];
+            while (pointer != null){
+                pointer = pointer.next;
+                length ++;
+            }
+            result[i] = length;
+        }
+        return result;
+    }
 }
