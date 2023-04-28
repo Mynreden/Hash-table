@@ -77,7 +77,25 @@ public class MyHashTable<K, V> {
         return pointer.value;
     }
 
-    public boolean contains(V value){}
+    public boolean contains(V value){
+        for (int index = 0; index < this.M; index ++){
+            HashNode<K, V> pointer = this.chainArray[index];
+            while (pointer != null){
+                if (pointer.value.equals(value)) return true;
+                pointer = pointer.next;
+            }
+        }
+        return false;
+    }
 
-    public K getKey(V value) {}
+    public K getKey(V value) throws Exception {
+        for (int index = 0; index < this.M; index ++){
+            HashNode<K, V> pointer = this.chainArray[index];
+            while (pointer != null){
+                if (pointer.value.equals(value)) return pointer.key;
+                pointer = pointer.next;
+            }
+        }
+        throw new Exception("Key does not exist");
+    }
 }
