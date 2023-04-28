@@ -3,19 +3,10 @@ import java.util.Objects;
 public class Student {
     private String name;
     private int group;
-    private int id;
-    private static int numbers = 0;
+    private float gpa;
 
-    public Student(){
-        this.name = "No-name";
-        this.group = 0;
-        this.id = numbers;
-        numbers++;
-    }
-
-    public Student(String name, int group){
-        this.id = numbers;
-        numbers++;
+    public Student(String name, int group, float gpa){
+        this.gpa = gpa;
         this.name = name;
         this.group = group;
     }
@@ -24,7 +15,7 @@ public class Student {
     public int hashCode() {
         int hash = 3;
         hash = hash * 5 + group;
-        hash = hash * 7 + id;
+        hash = hash * 7 + (int) gpa;
 
         char[] arr = name.toCharArray();
         int m = 0;
@@ -35,7 +26,15 @@ public class Student {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return group == student.group && Float.compare(student.gpa, gpa) == 0 && Objects.equals(name, student.name);
+    }
+
+    @Override
     public String toString(){
-        return this.id + ". " + this.name;
+        return this.name + ' ' + this.group;
     }
 }
