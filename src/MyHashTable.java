@@ -1,4 +1,5 @@
 import java.security.KeyException;
+import java.util.Arrays;
 
 public class MyHashTable<K, V> {
     private static class HashNode<K, V>{
@@ -13,7 +14,7 @@ public class MyHashTable<K, V> {
 
         @Override
         public String toString(){
-            return "{" + key + " " + value + "}";
+            return "(" + key + ", " + value + ")";
         }
     }
     private final HashNode<K, V>[] chainArray;
@@ -97,5 +98,52 @@ public class MyHashTable<K, V> {
             }
         }
         throw new Exception("Key does not exist");
+    }
+
+    public Object[] getValuesArray(){
+        Object[] result = new Object[this.size];
+        int i = 0;
+        for (int index = 0; index < this.M; index ++){
+            HashNode<K, V> pointer = this.chainArray[index];
+            while (pointer != null){
+                result[i] = pointer.value;
+                i ++;
+                pointer = pointer.next;
+            }
+        }
+        return result;
+    }
+
+    public Object[] getKeysArray(){
+        Object[] result = new Object[this.size];
+        int i = 0;
+        for (int index = 0; index < this.M; index ++){
+            HashNode<K, V> pointer = this.chainArray[index];
+            while (pointer != null){
+                result[i] = pointer.key;
+                i ++;
+                pointer = pointer.next;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder result = new StringBuilder();
+        result.append('[');
+        int i = 0;
+        for (int index = 0; index < this.M; index ++){
+            HashNode<K, V> pointer = this.chainArray[index];
+            while (pointer != null){
+                result.append(pointer.toString()).append(", ");
+                i ++;
+                pointer = pointer.next;
+            }
+        }
+        int length = result.length();
+        result.delete(length - 2, length);
+        result.append(']');
+        return result.toString();
     }
 }
